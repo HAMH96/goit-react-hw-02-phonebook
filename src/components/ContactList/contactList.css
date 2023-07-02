@@ -1,0 +1,12 @@
+.contact-list {
+  display: flex;
+  gap: 15px;
+  flex-direction: column;
+  padding: 0;
+}
+
+.contact-list-element {
+  display: flex;
+  gap: 5px;
+  justify-content: space-between;
+}
