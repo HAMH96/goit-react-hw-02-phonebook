@@ -1,10 +1,10 @@
-import { Component} from 'react';
+import { Component } from 'react';
 import { nanoid } from 'nanoid';
 import ContactForm from './ContactForm/ContactForm';
 import ContactFilter from './ContactFilter/ContactFilter';
 import ContactList from './ContactList/ContactList';
-import "./app.css";
-
+import './app.css';
+import Notiflix from 'notiflix';
 
 export class App extends Component {
   state = {
@@ -19,6 +19,25 @@ export class App extends Component {
 
   addContact = (name, number) => {
     const { contacts } = this.state;
+
+    if (
+      contacts.filter(
+        contact => contact.name.toLowerCase() === name.toLowerCase()
+      ).length !== 0
+    ) {
+      Notiflix.Notify.failure(
+        `${name} is already in contacts`
+      );
+      return;
+    } else if (
+      contacts.filter(contact => contact.number === number).length !== 0
+    ) {
+      Notiflix.Notify.failure(
+        `The number ${number} is already in contacts`
+      );
+      return;
+    }
+
     const newContact = {
       id: nanoid(),
       name,
@@ -29,6 +48,7 @@ export class App extends Component {
     this.setState({
       contacts: updatedContacts,
     });
+    Notiflix.Notify.success('Contacto guardado exitosamente');
   };
 
   handleFilterChange = event => {
@@ -49,6 +69,8 @@ export class App extends Component {
     this.setState({
       contacts: updatedContacts,
     });
+    if (updatedContacts.length === 0)
+      Notiflix.Notify.info(`Contacts list is empty`);
   };
 
   render() {

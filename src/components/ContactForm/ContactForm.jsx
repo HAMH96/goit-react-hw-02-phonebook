@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import "./contactForm.css"
+import './contactForm.css';
 
 class ContactForm extends Component {
   state = {
@@ -17,8 +17,8 @@ class ContactForm extends Component {
     event.preventDefault();
     const { name, number } = this.state;
     // const form = event.currentTarget; //nuevo
+    this.setState({ name: '', number: '' });
     this.props.onAddContact(name, number);
-      this.setState({ name: '', number: '' });
     // form.reset(); // nuevo
   };
 
